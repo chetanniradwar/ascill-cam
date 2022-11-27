@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Ascii CAM</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel="stylesheet" href="./index.css"> -->
+    <style>
+        #video--window{
+    background-color : black;
+    border: 2px rebeccapurple;
+    height: 100vh;
+    width: 100vw;
+
+    }
+        #video--window > div{
+        color:white;
+        letter-spacing: 4px;
+        white-space: pre;
+        font-size: 5px;
+
+    }
+    </style>
+</head>
+<body>
+    <div id="video--window">
+
+    </div>
+
+
+
+    <script type="text/javascript">
+        let url = `ws://${window.location.host}/ws/socket-server/`
+
+        const chatSocket = new WebSocket(url)
+
+        chatSocket.onmessage = function(e){
+            let data = JSON.parse(e.data)
+            // console.log('Data:', data)
+            if(data.type === "connection established"){
+                video_window = document.getElementById("video--window")
+                // console.log(video_window)
+                video_window.innerHTML = ""
+                // console.log(video_window)
+                // console.log(data.stream)
+                video_window.insertAdjacentHTML('beforeend', data.stream);
+
+            }
+    }
+
+
+    </script>
+</body>
+</html>
